@@ -41,6 +41,7 @@ Musico is a web application designed to bring musicians together, providing real
 - **Supabase**: Utilized for authentication services.
 - **Sentry**: Implemented for error tracking and logging.
 - **Neon Database**: Employed for storing application data, including channels and messages.
+- **Progressier**: Used for adding Progressive Web App (PWA) support to the application.
 
 ## Setup Instructions
 
@@ -67,22 +68,28 @@ npm install
 
 ### Database Migration
 
-Before building the app, ensure your database is up to date by running:
+Before running the app, ensure your database is up to date by running:
 
 ```bash
 npm run db:push
 ```
 
-### Build the App
+This command will create the necessary tables (`channels` and `messages`) in your Neon Database.
 
-```bash
-npm run build
-```
+**Note**: If you encounter an error like `NeonDbError: relation "channels" does not exist`, it means the database tables have not been created. Running the above command should resolve the issue.
 
 ### Run the App Locally
 
 ```bash
 npm run dev
+```
+
+### Build the App
+
+If you wish to build the app for production:
+
+```bash
+npm run build
 ```
 
 ## Deployment
@@ -95,3 +102,8 @@ When deploying to Vercel or any other platform, make sure to set the environment
 - `NEON_DB_URL`
 
 Ensure that `NEON_DB_URL` is available during the build process to prevent build errors related to database connections.
+
+### Important
+
+- **Database Initialization**: Always ensure that the database tables are created by running `npm run db:push` whenever you set up the project on a new environment.
+- **Environment Variables**: Double-check that all environment variables are correctly set in both your local `.env` file and your deployment platform.

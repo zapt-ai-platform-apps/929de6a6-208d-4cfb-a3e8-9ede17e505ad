@@ -5,6 +5,6 @@ export default defineConfig({
   out: './drizzle',
   driver: 'pg',
   dbCredentials: {
-    url: process.env.NEON_DB_URL,
+    connectionString: process.env.NEON_DB_URL,
   },
 });
