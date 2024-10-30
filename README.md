@@ -1,6 +1,6 @@
 # Musico
 
-Musico is a Discord-like web application designed for musicians to collaborate, chat, and share their music. It provides real-time communication channels where users can join existing conversations or create new ones based on their interests.
+Musico is a web application designed to bring musicians together, providing real-time communication and collaboration tools. It's similar to Discord but tailored specifically for musicians to chat, share ideas, and collaborate on projects.
 
 ## User Journeys
 
