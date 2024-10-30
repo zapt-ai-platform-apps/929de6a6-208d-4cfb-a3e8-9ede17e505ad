@@ -37,6 +37,7 @@ Musico is a Discord-like app designed specifically for musicians to collaborate,
 - **Channel Management**: Join existing channels or create new ones based on your interests.
 - **User Authentication**: Secure sign-in using ZAPT with options for Google, Facebook, Apple, or Email.
 - **Responsive Design**: Enjoy a seamless experience across all devices, including desktops, tablets, and mobile phones.
+- **Error Tracking with Sentry**: All errors are logged to Sentry for better monitoring and debugging.
 
 ## External Services Used
 

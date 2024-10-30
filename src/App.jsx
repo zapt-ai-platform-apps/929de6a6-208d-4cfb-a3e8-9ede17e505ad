@@ -2,7 +2,8 @@ import { createSignal, onMount, createEffect, Show, For } from 'solid-js';
 import { supabase } from './supabaseClient';
 import { Auth } from '@supabase/auth-ui-solid';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { createEvent } from './supabaseClient';
+
+import * as Sentry from "@sentry/browser";
 
 function App() {
   const [user, setUser] = createSignal(null);
@@ -20,12 +21,12 @@ function App() {
       setUser(user);
       setCurrentPage('homePage');
     }
-  }
+  };
 
   onMount(() => {
     checkUserSignedIn();
 
-    const authListener = supabase.auth.onAuthStateChange((_, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         setUser(session.user);
         setCurrentPage('homePage');
@@ -36,8 +37,8 @@ function App() {
     });
 
     return () => {
-      authListener.data.subscription.unsubscribe();
-    }
+      authListener.subscription.unsubscribe();
+    };
   });
 
   // Fetch Channels
@@ -48,12 +49,15 @@ function App() {
         const data = await response.json();
         setChannels(data);
       } else {
-        console.error('Error fetching channels:', response.statusText);
+        const error = new Error(`Error fetching channels: ${response.statusText}`);
+        Sentry.captureException(error);
+        console.error(error);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error('Error fetching channels:', error);
     }
-  }
+  };
 
   // Fetch Messages for the active channel
   const fetchMessages = async (channelId) => {
@@ -63,12 +67,15 @@ function App() {
         const data = await response.json();
         setMessages(data);
       } else {
-        console.error('Error fetching messages:', response.statusText);
+        const error = new Error(`Error fetching messages: ${response.statusText}`);
+        Sentry.captureException(error);
+        console.error(error);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error('Error fetching messages:', error);
     }
-  }
+  };
 
   // Handle sending a new message
   const sendMessage = async (e) => {
@@ -92,21 +99,24 @@ function App() {
         setNewMessage('');
         fetchMessages(activeChannel().id);
       } else {
-        console.error('Error sending message:', response.statusText);
+        const error = new Error(`Error sending message: ${response.statusText}`);
+        Sentry.captureException(error);
+        console.error(error);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error('Error sending message:', error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   // Handle signing out
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     setUser(null);
     setCurrentPage('login');
-  }
+  };
 
   // When user is authenticated, fetch channels
   createEffect(() => {
@@ -123,11 +133,17 @@ function App() {
   });
 
   // Poll messages every 5 seconds
-  setInterval(() => {
+  let messageInterval;
+  createEffect(() => {
     if (activeChannel()) {
-      fetchMessages(activeChannel().id);
+      if (messageInterval) clearInterval(messageInterval);
+      messageInterval = setInterval(() => {
+        fetchMessages(activeChannel().id);
+      }, 5000);
+    } else if (messageInterval) {
+      clearInterval(messageInterval);
     }
-  }, 5000);
+  });
 
   // Handle creating a new channel
   const [newChannelName, setNewChannelName] = createSignal('');
@@ -150,14 +166,17 @@ function App() {
         setNewChannelName('');
         fetchChannels();
       } else {
-        console.error('Error creating channel:', response.statusText);
+        const error = new Error(`Error creating channel: ${response.statusText}`);
+        Sentry.captureException(error);
+        console.error(error);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error('Error creating channel:', error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div class="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-gray-800">
@@ -218,11 +237,11 @@ function App() {
                 class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
               />
               <button
-                class="w-full mt-2 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
+                class={`w-full mt-2 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={createChannel}
                 disabled={loading()}
               >
-                Create Channel
+                {loading() ? 'Creating...' : 'Create Channel'}
               </button>
             </div>
           </div>
@@ -248,10 +267,10 @@ function App() {
                 />
                 <button
                   type="submit"
-                  class="px-6 py-3 bg-purple-500 text-white rounded-r-lg hover:bg-purple-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
+                  class={`px-6 py-3 bg-purple-500 text-white rounded-r-lg hover:bg-purple-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={loading()}
                 >
-                  Send
+                  {loading() ? 'Sending...' : 'Send'}
                 </button>
               </form>
             </Show>
