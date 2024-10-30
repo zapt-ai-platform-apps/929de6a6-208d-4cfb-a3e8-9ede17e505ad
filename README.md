@@ -41,3 +41,57 @@ Musico is a web application designed to bring musicians together, providing real
 - **Supabase**: Utilized for authentication services.
 - **Sentry**: Implemented for error tracking and logging.
 - **Neon Database**: Employed for storing application data, including channels and messages.
+
+## Setup Instructions
+
+### Environment Variables
+
+Ensure you have a `.env` file at the root of your project with the following variables:
+
+```env
+VITE_PUBLIC_APP_ID=your_zapt_app_id
+VITE_PUBLIC_SENTRY_DSN=your_sentry_dsn
+VITE_PUBLIC_APP_ENV=development
+NEON_DB_URL=your_neon_db_url
+```
+
+- Replace `your_zapt_app_id` with your ZAPT Application ID.
+- Replace `your_sentry_dsn` with your Sentry DSN.
+- Replace `your_neon_db_url` with your Neon Database URL.
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Database Migration
+
+Before building the app, ensure your database is up to date by running:
+
+```bash
+npm run db:push
+```
+
+### Build the App
+
+```bash
+npm run build
+```
+
+### Run the App Locally
+
+```bash
+npm run dev
+```
+
+## Deployment
+
+When deploying to Vercel or any other platform, make sure to set the environment variables in the deployment settings:
+
+- `VITE_PUBLIC_APP_ID`
+- `VITE_PUBLIC_SENTRY_DSN`
+- `VITE_PUBLIC_APP_ENV`
+- `NEON_DB_URL`
+
+Ensure that `NEON_DB_URL` is available during the build process to prevent build errors related to database connections.
