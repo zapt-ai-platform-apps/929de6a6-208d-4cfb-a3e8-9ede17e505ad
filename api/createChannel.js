@@ -1,7 +1,7 @@
 import { channels } from '../drizzle/schema.js';
 import { authenticateUser } from "./_apiUtils.js";
 import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
 
 import * as Sentry from "@sentry/node";
 
