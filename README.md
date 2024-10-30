@@ -50,15 +50,20 @@ Musico is a web application designed to bring musicians together, providing real
 Ensure you have a `.env` file at the root of your project with the following variables:
 
 ```env
-VITE_PUBLIC_APP_ID=your_zapt_app_id
-VITE_PUBLIC_SENTRY_DSN=your_sentry_dsn
+VITE_PUBLIC_APP_ID=Your_ZAPT_APP_ID
+VITE_PUBLIC_SENTRY_DSN=Your_Sentry_DSN
 VITE_PUBLIC_APP_ENV=development
-NEON_DB_URL=your_neon_db_url
+
+APP_ID=Your_ZAPT_APP_ID
+SENTRY_DSN=Your_Sentry_DSN
+APP_ENV=development
+
+NEON_DB_URL=Your_NeonDB_URL
 ```
 
-- Replace `your_zapt_app_id` with your ZAPT Application ID.
-- Replace `your_sentry_dsn` with your Sentry DSN.
-- Replace `your_neon_db_url` with your Neon Database URL.
+- Replace `Your_ZAPT_APP_ID` with your ZAPT Application ID.
+- Replace `Your_Sentry_DSN` with your Sentry DSN.
+- Replace `Your_NeonDB_URL` with your Neon Database URL.
 
 ### Install Dependencies
 
@@ -87,6 +92,9 @@ When deploying to Vercel or any other platform, make sure to set the environment
 - `VITE_PUBLIC_APP_ID`
 - `VITE_PUBLIC_SENTRY_DSN`
 - `VITE_PUBLIC_APP_ENV`
+- `APP_ID`
+- `SENTRY_DSN`
+- `APP_ENV`
 - `NEON_DB_URL`
 
 Ensure that `NEON_DB_URL` is available during the build process to prevent build errors related to database connections.
@@ -95,3 +103,4 @@ Ensure that `NEON_DB_URL` is available during the build process to prevent build
 
 - **Database Initialization**: The database tables are automatically created during the build process. Ensure your build completes successfully to set up the necessary database schema.
 - **Environment Variables**: Double-check that all environment variables are correctly set in both your local `.env` file and your deployment platform.
+- **Icon Update**: The app uses an external icon URL. Make sure to update the `icon512` URL in `index.jsx` with the correct icon for Musico.
