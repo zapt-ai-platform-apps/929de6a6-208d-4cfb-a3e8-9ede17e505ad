@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, uuid, integer } from 'drizzle-orm/pg-core';
 
 export const channels = pgTable('channels', {
   id: serial('id').primaryKey(),
@@ -12,5 +12,5 @@ export const messages = pgTable('messages', {
   createdAt: timestamp('created_at').defaultNow(),
   userId: uuid('user_id').notNull(),
   username: text('username').notNull(),
-  channelId: serial('channel_id').notNull(),
+  channelId: integer('channel_id').notNull(),
 });

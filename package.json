@@ -17,7 +17,7 @@
     "@sentry/browser": "8.35.0",
     "@sentry/node": "8.35.0",
     "@zapt/zapt-js": "^1.0.5",
-    "drizzle-orm": "^0.36.2",
+    "drizzle-orm": "^0.32.1",
     "@neondatabase/serverless": "^0.9.5"
   },
   "devDependencies": {

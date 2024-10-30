@@ -33,8 +33,8 @@ export default async function handler(req, res) {
     const sql = neon(process.env.NEON_DB_URL);
     const db = drizzle(sql);
 
-    const result = await db.insert(channels).values({ 
-      name, 
+    const result = await db.insert(channels).values({
+      name,
     }).returning();
 
     res.status(201).json(result[0]);
