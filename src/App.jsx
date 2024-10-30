@@ -3,8 +3,6 @@ import { supabase } from './supabaseClient';
 import { Auth } from '@supabase/auth-ui-solid';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 
-import * as Sentry from "@sentry/browser";
-
 function App() {
   const [user, setUser] = createSignal(null);
   const [currentPage, setCurrentPage] = createSignal('login');
@@ -49,12 +47,9 @@ function App() {
         const data = await response.json();
         setChannels(data);
       } else {
-        const error = new Error(`Error fetching channels: ${response.statusText}`);
-        Sentry.captureException(error);
-        console.error(error);
+        console.error('Error fetching channels:', response.statusText);
       }
     } catch (error) {
-      Sentry.captureException(error);
       console.error('Error fetching channels:', error);
     }
   };
@@ -67,12 +62,9 @@ function App() {
         const data = await response.json();
         setMessages(data);
       } else {
-        const error = new Error(`Error fetching messages: ${response.statusText}`);
-        Sentry.captureException(error);
-        console.error(error);
+        console.error('Error fetching messages:', response.statusText);
       }
     } catch (error) {
-      Sentry.captureException(error);
       console.error('Error fetching messages:', error);
     }
   };
@@ -99,12 +91,9 @@ function App() {
         setNewMessage('');
         fetchMessages(activeChannel().id);
       } else {
-        const error = new Error(`Error sending message: ${response.statusText}`);
-        Sentry.captureException(error);
-        console.error(error);
+        console.error('Error sending message:', response.statusText);
       }
     } catch (error) {
-      Sentry.captureException(error);
       console.error('Error sending message:', error);
     } finally {
       setLoading(false);
@@ -166,12 +155,9 @@ function App() {
         setNewChannelName('');
         fetchChannels();
       } else {
-        const error = new Error(`Error creating channel: ${response.statusText}`);
-        Sentry.captureException(error);
-        console.error(error);
+        console.error('Error creating channel:', response.statusText);
       }
     } catch (error) {
-      Sentry.captureException(error);
       console.error('Error creating channel:', error);
     } finally {
       setLoading(false);

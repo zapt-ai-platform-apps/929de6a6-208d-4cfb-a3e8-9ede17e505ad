@@ -6,13 +6,14 @@ import { drizzle } from 'drizzle-orm/neon-serverless';
 import * as Sentry from "@sentry/node";
 
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  environment: process.env.APP_ENV,
-});
-
-Sentry.configureScope(scope => {
-  scope.setTag("type", "backend");
-  scope.setTag("projectId", process.env.APP_ID);
+  dsn: process.env.VITE_PUBLIC_SENTRY_DSN,
+  environment: process.env.VITE_PUBLIC_APP_ENV,
+  initialScope: {
+    tags: {
+      type: 'backend',
+      projectId: process.env.VITE_PUBLIC_APP_ID
+    }
+  }
 });
 
 export default async function handler(req, res) {
