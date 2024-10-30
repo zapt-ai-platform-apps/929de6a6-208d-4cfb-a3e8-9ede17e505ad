@@ -7,14 +7,10 @@ import * as Sentry from "@sentry/browser";
 Sentry.init({
   dsn: import.meta.env.VITE_PUBLIC_SENTRY_DSN,
   environment: import.meta.env.VITE_PUBLIC_APP_ENV,
-  integrations: [Sentry.browserTracingIntegration()],
-  initialScope: {
-    tags: {
-      type: 'frontend',
-      projectId: import.meta.env.VITE_PUBLIC_APP_ID
-    }
-  }
 });
+
+Sentry.setTag("type", "frontend");
+Sentry.setTag("projectId", import.meta.env.VITE_PUBLIC_APP_ID);
 
 // Add PWA support to the app (this will add a service worker and a manifest file, you don't need to do anything else)
 window.progressierAppRuntimeSettings = {
