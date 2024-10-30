@@ -16,7 +16,9 @@
     "@solidjs/router": "^0.8.4",
     "@sentry/browser": "8.35.0",
     "@sentry/node": "8.35.0",
-    "@zapt/zapt-js": "^1.0.5"
+    "@zapt/zapt-js": "^1.0.5",
+    "drizzle-orm": "^0.36.2",
+    "@neondatabase/serverless": "^0.9.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
@@ -24,8 +26,6 @@
     "tailwindcss": "^3.4.13",
     "vite": "^5.4.7",
     "vite-plugin-solid": "^2.10.2",
-    "drizzle-orm": "^0.36.2",
-    "drizzle-kit": "^0.24.2",
-    "@neondatabase/serverless": "^0.9.5"
+    "drizzle-kit": "^0.24.2"
   }
 }
