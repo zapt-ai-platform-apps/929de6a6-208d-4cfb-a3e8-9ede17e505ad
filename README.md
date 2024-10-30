@@ -66,18 +66,6 @@ NEON_DB_URL=your_neon_db_url
 npm install
 ```
 
-### Database Migration
-
-Before running the app, ensure your database is up to date by running:
-
-```bash
-npm run db:push
-```
-
-This command will create the necessary tables (`channels` and `messages`) in your Neon Database.
-
-**Note**: If you encounter an error like `NeonDbError: relation "channels" does not exist`, it means the database tables have not been created. Running the above command should resolve the issue.
-
 ### Run the App Locally
 
 ```bash
@@ -86,7 +74,7 @@ npm run dev
 
 ### Build the App
 
-If you wish to build the app for production:
+The database migrations are applied automatically during the build process. To build the app for production:
 
 ```bash
 npm run build
@@ -105,5 +93,5 @@ Ensure that `NEON_DB_URL` is available during the build process to prevent build
 
 ### Important
 
-- **Database Initialization**: Always ensure that the database tables are created by running `npm run db:push` whenever you set up the project on a new environment.
+- **Database Initialization**: The database tables are automatically created during the build process. Ensure your build completes successfully to set up the necessary database schema.
 - **Environment Variables**: Double-check that all environment variables are correctly set in both your local `.env` file and your deployment platform.

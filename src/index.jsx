@@ -24,7 +24,7 @@ window.progressierAppRuntimeSettings = {
   shortName: "Musico"
 };
 let script = document.createElement('script');
-script.setAttribute('src', 'https://progressier.app/your-progressier-id/script.js');
+script.setAttribute('src', 'https://progressier.app/z8yY3IKmfpDIw3mSncPh/script.js');
 script.setAttribute('defer', 'true');
 document.querySelector('head').appendChild(script);
 
